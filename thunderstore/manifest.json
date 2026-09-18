@@ -1,0 +1,10 @@
+{
+  "name": "Recount",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/jumpingmushroom/Recount",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350",
+    "ValheimModding-Jotunn-2.30.0"
+  ],
+  "description": "A Recount-style combat meter: damage, DPS, damage taken, healing, max hits and all-time personal records, shared between players. Client-side."
+}
