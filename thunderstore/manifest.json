@@ -1,7 +1,7 @@
 {
   "name": "Recount",
   "version_number": "0.1.0",
-  "website_url": "https://github.com/jumpingmushroom/Tally",
+  "website_url": "https://github.com/jumpingmushroom/Recount",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2350",
     "ValheimModding-Jotunn-2.30.0"

@@ -17,4 +17,4 @@ personal records** a click away. It shows what the players around you are doing,
 `F7` toggles the window; hold `Left Alt` to free the cursor to drag, resize and click. Report
 posts the current view to chat. Console: `recount` for the rest.
 
-Requires BepInEx and Jotunn. Source and issues: https://github.com/jumpingmushroom/Tally
+Requires BepInEx and Jotunn. Source and issues: https://github.com/jumpingmushroom/Recount
