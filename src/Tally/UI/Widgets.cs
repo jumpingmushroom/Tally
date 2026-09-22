@@ -102,11 +102,7 @@ namespace Tally.UI
             TextMeshProUGUI t = go.GetComponent<TextMeshProUGUI>();
             t.font = Font;
             if (PluginConfig.TextOutline.Value)
-            {
-                Material outline = Fonts.Outline(t.font);
-                if (outline != null)
-                    t.fontSharedMaterial = outline;
-            }
+                Fonts.ApplyOutline(t);
             t.fontSize = size;
             t.color = color;
             t.alignment = align;

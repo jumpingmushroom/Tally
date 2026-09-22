@@ -13,9 +13,10 @@
   so it reads over bright scenery instead of dissolving into it. `Window.TextOutline` turns it
   off. Because the outline does the work, `Window.Opacity` only had to go from 0.6 to 0.75:
   enough to settle the background without turning the window into a solid box over the game.
-- The list holds only fonts that can draw Latin text. The game keeps ~35 Noto fallback assets
-  for other scripts; they are dynamic assets with empty atlases and a window set to one drew
-  nothing at all.
+- The list holds only fonts meant to be read with. The game carries ~36 Noto assets that TMP
+  keeps as fallbacks for scripts it does not otherwise draw, and a window set to one drew
+  nothing at all; they are recognised as fallbacks through TMP's own tables rather than by
+  counting glyphs, which grow as the game runs.
 
 ## 0.1.0 — first cut
 
