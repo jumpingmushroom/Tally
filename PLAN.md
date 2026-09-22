@@ -1,6 +1,6 @@
 # Tally — Technical Plan
 
-**Goal:** a client-side Valheim combat meter in the mould of the WoW Tally/Skada addons:
+**Goal:** a client-side Valheim combat meter in the mould of the WoW Recount/Skada addons:
 damage done, DPS, damage taken, healing, max hit and all-time personal records, for every player
 nearby, in a draggable window of coloured bars.
 
@@ -160,7 +160,7 @@ then also reports. It closes within a round trip of the peer's first hello.
 *Overall* since login or reset; *Current* fight; the last `HistorySize` fights. A fight starts
 on the first Damage or Taken event and closes after `FightTimeout` seconds without one; heals
 outside a fight go to Overall only. A closed fight is labelled by the target that took the most
-damage and its duration. DPS is Tally's, not Skada's: per player, the gaps between that
+damage and its duration. DPS is Recount's, not Skada's: per player, the gaps between that
 player's hits, each capped at `ActiveGap`, divided into their damage.
 
 ### 2.5 Window (`UI/MeterWindow`, `UI/MeterView`)
@@ -214,7 +214,7 @@ a session appears.
 
 1. **Name: Tally**, `com.jumpingmushroom.tally`, in the `Tally` directory as created.
 2. **Real damage means the health delta before the zero clamp**, i.e. `hit.GetTotalDamage()`
-   after `ApplyDamage`, overkill included, as Tally counts it.
+   after `ApplyDamage`, overkill included, as Recount counts it.
 3. **DoT ticks are their own abilities** ("Burning", "Poison", "Spirit") credited to the most
    recent applier, because the game keeps one damage pool per effect.
 4. **Records need real hits.** Approximate damage never sets a record.

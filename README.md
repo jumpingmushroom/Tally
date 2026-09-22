@@ -42,7 +42,7 @@ player's weapons, or what hit them, or what healed them, or their biggest hits.
 
 - **Damage Done** — real post-mitigation damage, as it came off the target's health.
 - **DPS** — damage over the time that player spent actively fighting: gaps between their hits,
-  each capped at five seconds. Tally's definition, so a player who arrives late is not
+  each capped at five seconds. Recount's definition, so a player who arrives late is not
   penalised for the time before they did.
 - **Damage Taken** — with a breakdown by what hit them.
 - **Healing** — food regen and healing effects, effective healing only; overheal is in the tooltip.
@@ -83,6 +83,7 @@ damage threshold are separate settings. Estimated (`~`) hits never set a record.
 `tally show|hide|reset`, `tally mode damage|dps|taken|healing|maxhit|records`,
 `tally seg`, `tally report`, `tally dump` (the current view as text), `tally records`,
 `tally forget` (delete this character's records for this world), `tally sfx [name]`,
+`tally fonts` (every font the window can use), `tally font <name>` (switch to one),
 `tally peers` (who else is running it), `tally stats`.
 
 ## Building
