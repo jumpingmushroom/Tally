@@ -1,34 +1,30 @@
 # Changelog
 
-## 0.1.1 — readability
+## 1.0.0 — first release
 
-- The window, banner and tooltip now use **Valheim-AveriaSerifLibre** instead of Valheim-Norse.
-  Norse is a display face: forced small caps, thin uneven strokes and cramped digits, which is
-  what the meter is mostly made of. Averia Serif has true lowercase and legible numbers at the
-  12-14px the rows and title bar run at.
-- `Window.Font` chooses that font from every TextMeshPro font the game has loaded, as a dropdown
-  in ConfigurationManager once you are in a world. `tally fonts` lists the names and
-  `tally font <name>` switches without leaving the game.
-- Text is outlined with the font's own outline material, the way the game's own HUD text is,
-  so it reads over bright scenery instead of dissolving into it. `Window.TextOutline` turns it
-  off. Because the outline does the work, `Window.Opacity` only had to go from 0.6 to 0.75:
-  enough to settle the background without turning the window into a solid box over the game.
-- The list holds only fonts meant to be read with. The game carries ~36 Noto assets that TMP
-  keeps as fallbacks for scripts it does not otherwise draw, and a window set to one drew
-  nothing at all; they are recognised as fallbacks through TMP's own tables rather than by
-  counting glyphs, which grow as the game runs.
+A combat meter for Valheim: who is doing what damage, to what, and how much of it.
 
-## 0.1.0 — first cut
+- **Six modes** in one window of coloured bars — Damage Done, DPS, Damage Taken, Healing,
+  Max Hit and Records. Rank and name on the left, value and share on the right, the bar's
+  length its value against the top player's. Hover for the numbers behind a bar; click to
+  drill into that player's weapons, what hit them, what healed them, or their biggest hits.
+- **Segments**: Overall, the current fight, and the previous five. A fight ends after 5 s of
+  quiet and is labelled by whatever took the most damage.
+- **Everyone around you, not just you.** Valheim computes real damage only on the client that
+  owns the target, so clients running Tally share what they saw over the game's own routed
+  RPC. Nothing is installed on the server, a vanilla dedicated server relays it untouched, and
+  players without the mod are unaffected. Where nobody could report the real number, the
+  attacker's own pre-mitigation figure is shown and marked with a `~`.
+- **All-time personal records** per weapon and overall, kept per character and world. Beating
+  one raises a banner and plays a vanilla fanfare, both configurable, with a damage floor so a
+  fresh character is not serenaded for every punch.
+- **DoT attribution**: burning, poison and spirit ticks are credited to whoever applied them,
+  tick by tick, as their own rows.
+- **Readable at a glance.** The window is drawn in Valheim-AveriaSerifLibre, chosen by
+  comparing every font the game loads at the real size in-game, and the text carries that
+  font's outline the way the game's own HUD text does, so it survives bright scenery without
+  the window having to become a solid box. `Window.Font` changes the face — `tally fonts`
+  lists what is available, `tally font <name>` switches without leaving the game.
+- **Console**: `tally show|hide|reset|mode|seg|report|dump|records|forget|sfx|fonts|font|peers|stats`.
 
-- Damage Done, DPS, Damage Taken, Healing, Max Hit and Records modes in a Recount-style window
-  of coloured bars: rank and name left, value and share right, hover for detail, click to drill
-  into a player's weapons, sources or top hits.
-- Segments: Overall, the current fight, and the previous five. A fight ends after 5 s of quiet.
-- Sharing between players over the game's routed RPC. Nothing on the server; players without
-  the mod are unaffected. Hits on creatures owned by a client without the mod are recorded by
-  the attacker pre-mitigation and shown with a "~".
-- Burning, poison and spirit ticks credited to whoever applied them.
-- All-time personal records per weapon and overall, per character and world, with a banner and
-  a vanilla fanfare (`fx_GP_Activation` by default, swappable in the config).
-- `tally` console command: show, hide, reset, mode, seg, report, dump, records, forget, sfx,
-  peers, stats.
+Client-side. Requires BepInEx and Jotunn. Built against Valheim 1.0.15.

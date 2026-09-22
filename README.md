@@ -8,6 +8,8 @@ record with a weapon.
 
 Built against **Valheim 1.0.15**. Nothing to install on the server.
 
+![Records mode: all-time best hit with every weapon](docs/images/records.png)
+
 ## Install
 
 Requires BepInEx 5 and [Jotunn](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/).
@@ -28,6 +30,10 @@ switches.
 
 Text carries the font's own outline (`Window.TextOutline`), which is what keeps it readable
 where the window is see-through; `Window.Opacity` defaults to 0.75 for the same reason.
+
+| Damage Done, mid-fight | Drilled into a player's weapons |
+|---|---|
+| ![Damage Done](docs/images/meter.png) | ![Drill-in](docs/images/drill.png) |
 
 Title bar buttons: **Reset** clears every segment. **Seg** pages through Overall, the current
 fight and the previous few. **Mode** steps through the modes. **Rep** posts the current view to

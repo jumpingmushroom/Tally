@@ -1,10 +1,10 @@
 {
   "name": "Tally",
-  "version_number": "0.1.1",
+  "version_number": "1.0.0",
   "website_url": "https://github.com/jumpingmushroom/Tally",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2350",
-    "ValheimModding-Jotunn-2.30.0"
+    "ValheimModding-Jotunn-2.30.2"
   ],
   "description": "A Recount-style combat meter: damage, DPS, damage taken, healing, max hits and all-time personal records, shared between players. Client-side."
 }

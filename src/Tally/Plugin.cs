@@ -17,7 +17,7 @@ namespace Tally
     {
         public const string PluginGuid = "com.jumpingmushroom.tally";
         public const string PluginName = "Tally";
-        public const string PluginVersion = "0.1.1";
+        public const string PluginVersion = "1.0.0";
 
         internal static ManualLogSource Log;
         internal static MeterWindow Window;
