@@ -1,4 +1,4 @@
-"""Thunderstore icon: 256x256 PNG. A Recount window in miniature: a dark plate with four bars
+"""Thunderstore icon: 256x256 PNG. A Tally window in miniature: a dark plate with four bars
 of falling length, each in a different hue. Written without PIL, which the build box lacks."""
 import math
 import struct

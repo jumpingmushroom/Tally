@@ -1,6 +1,6 @@
-# Recount — Technical Plan
+# Tally — Technical Plan
 
-**Goal:** a client-side Valheim combat meter in the mould of the WoW Recount/Skada addons:
+**Goal:** a client-side Valheim combat meter in the mould of the WoW Tally/Skada addons:
 damage done, DPS, damage taken, healing, max hit and all-time personal records, for every player
 nearby, in a draggable window of coloured bars.
 
@@ -136,11 +136,11 @@ Every patch body is wrapped; a fault logs at most five times and never reaches t
 
 Two routed methods, registered on every new `ZRoutedRpc`:
 
-- `Recount_Hello` `{protocol, nonce, version, name}` — sent to Everybody on entering a world and
+- `Tally_Hello` `{protocol, nonce, version, name}` — sent to Everybody on entering a world and
   every 30 s, and directly to any peer whose first hello arrives, so a late joiner is known
   within a round trip. A peer is "running the mod" for 90 s after its last hello. This is what
   lets `Character.Damage` decide whether the owner will report a hit or the attacker must guess.
-- `Recount_Events` — a batch, flushed every `FlushInterval` (0.5 s) only when at least one peer
+- `Tally_Events` — a batch, flushed every `FlushInterval` (0.5 s) only when at least one peer
   runs the mod: `protocol, nonce, firstSeq, count, stringTable[], events[]`, each event
   `kind, flags, playerIdx, abilityIdx, targetIdx, amount(, overheal), damageType, position`.
   Strings are interned per packet; at most 80 events per packet keep indices in a byte.
@@ -160,7 +160,7 @@ then also reports. It closes within a round trip of the peer's first hello.
 *Overall* since login or reset; *Current* fight; the last `HistorySize` fights. A fight starts
 on the first Damage or Taken event and closes after `FightTimeout` seconds without one; heals
 outside a fight go to Overall only. A closed fight is labelled by the target that took the most
-damage and its duration. DPS is Recount's, not Skada's: per player, the gaps between that
+damage and its duration. DPS is Tally's, not Skada's: per player, the gaps between that
 player's hits, each capped at `ActiveGap`, divided into their damage.
 
 ### 2.5 Window (`UI/MeterWindow`, `UI/MeterView`)
@@ -176,7 +176,7 @@ which also stops attacks and camera input while held; the map and inventory free
 
 ### 2.6 Records (`Core/RecordStore`, `Core/Fanfare`)
 
-`BepInEx/config/Recount/records-<character>-<id>-<world>-<uid>.json`, hand-written JSON
+`BepInEx/config/Tally/records-<character>-<id>-<world>-<uid>.json`, hand-written JSON
 (`Core/Json`): the all-time best hit and a top ten per weapon, each with damage, weapon, target,
 damage type, sneak flag, skill and level, timestamp and world. Only real (non-approximate,
 non-DoT, non-structure) hits by the local player qualify. Beating a weapon's best or the
@@ -185,12 +185,12 @@ no fanfare for a weapon's very first hit.
 
 **Sound choice.** The vanilla prefab list has no dedicated skill level-up sound; the level-up
 effect is an `EffectList` on the player, reachable at runtime as `@levelup` (the mod reads
-`Player.m_skillLevelupEffects` and uses the first prefab with a `ZSFX`; `recount sfx` logs the
+`Player.m_skillLevelupEffects` and uses the first prefab with a `ZSFX`; `tally sfx` logs the
 real names). Verified names from the list that read as celebratory: **`fx_GP_Activation`** (the
 guardian power activation, chosen as the default: unmistakably "something good happened" and
 short), `sfx_secretfound` (the discovery chime), `sfx_lootspawn`. The boss-defeat sting is
 music, not a prefab, and every `sfx_*_death` is a creature's own death cry. A prefab that is
-missing or has no clip skips the sound and logs why in `recount stats`.
+missing or has no clip skips the sound and logs why in `tally stats`.
 
 ---
 
@@ -204,7 +204,7 @@ a session appears.
 
 ## 3. Verify on first deploy
 
-1. `recount stats`: RPC registered, sound resolves, `levelUpEffects` names; whether
+1. `tally stats`: RPC registered, sound resolves, `levelUpEffects` names; whether
    `fx_GP_Activation` carries its `ZSFX` on a child (the resolver searches children).
 2. Hits on a creature owned by another client with the mod arrive once (theirs) and not twice.
 3. Damage from another player's arrows names the bow, not "Bows", while it is still equipped.
@@ -212,9 +212,9 @@ a session appears.
 
 ## 4. Decisions (2026-09-18)
 
-1. **Name: Recount**, `com.jumpingmushroom.recount`, in the `Tally` directory as created.
+1. **Name: Tally**, `com.jumpingmushroom.tally`, in the `Tally` directory as created.
 2. **Real damage means the health delta before the zero clamp**, i.e. `hit.GetTotalDamage()`
-   after `ApplyDamage`, overkill included, as Recount counts it.
+   after `ApplyDamage`, overkill included, as Tally counts it.
 3. **DoT ticks are their own abilities** ("Burning", "Poison", "Spirit") credited to the most
    recent applier, because the game keeps one damage pool per effect.
 4. **Records need real hits.** Approximate damage never sets a record.

@@ -18,14 +18,14 @@ export DOTNET_ROOT="${DOTNET_ROOT:-$HOME/.dotnet}"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STAGE="$ROOT/dist/stage"
-PROJ="$ROOT/src/Recount/Recount.csproj"
-DLL="$ROOT/src/Recount/bin/Release/net472/Recount.dll"
+PROJ="$ROOT/src/Tally/Tally.csproj"
+DLL="$ROOT/src/Tally/bin/Release/net472/Tally.dll"
 
 echo "==> building"
 dotnet build "$PROJ" -c Release --nologo -v minimal
 
 VERSION=$(python3 -c "import json;print(json.load(open('$ROOT/thunderstore/manifest.json'))['version_number'])")
-ASM_VERSION=$(grep -oP '(?<=PluginVersion = ")[^"]+' "$ROOT/src/Recount/Plugin.cs")
+ASM_VERSION=$(grep -oP '(?<=PluginVersion = ")[^"]+' "$ROOT/src/Tally/Plugin.cs")
 
 if [ "$VERSION" != "$ASM_VERSION" ]; then
     echo "version mismatch: manifest.json says $VERSION, Plugin.cs says $ASM_VERSION" >&2
@@ -62,15 +62,15 @@ PY
 
 echo "==> staging"
 rm -rf "$STAGE"
-mkdir -p "$STAGE/plugins/Recount"
-cp "$DLL"                        "$STAGE/plugins/Recount/"
+mkdir -p "$STAGE/plugins/Tally"
+cp "$DLL"                        "$STAGE/plugins/Tally/"
 cp "$ROOT/thunderstore/manifest.json" "$STAGE/"
 cp "$ROOT/thunderstore/README.md"     "$STAGE/"
 cp "$ROOT/thunderstore/icon.png"      "$STAGE/"
 cp "$ROOT/CHANGELOG.md"               "$STAGE/"
 cp "$ROOT/LICENSE"                    "$STAGE/"
 
-OUT="$ROOT/dist/Recount-$VERSION.zip"
+OUT="$ROOT/dist/Tally-$VERSION.zip"
 rm -f "$OUT"
 ( cd "$STAGE" && zip -qr "$OUT" . )
 

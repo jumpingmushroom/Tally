@@ -26,7 +26,7 @@ echo "==> building and validating the bundle"
 "$ROOT/build/package.sh" >/dev/null
 
 VERSION=$(python3 -c "import json;print(json.load(open('$ROOT/thunderstore/manifest.json'))['version_number'])")
-ZIP="$ROOT/dist/Recount-$VERSION.zip"
+ZIP="$ROOT/dist/Tally-$VERSION.zip"
 [ -f "$ZIP" ] || { echo "no bundle at $ZIP" >&2; exit 1; }
 
 echo "==> generating thunderstore.toml from manifest.json"
@@ -60,8 +60,8 @@ readme = "./thunderstore/README.md"
 outdir = "./dist"
 
 [[build.copy]]
-source = "./src/Recount/bin/Release/net472/Recount.dll"
-target = "plugins/Recount"
+source = "./src/Tally/bin/Release/net472/Tally.dll"
+target = "plugins/Tally"
 
 [publish]
 repository = "https://thunderstore.io"

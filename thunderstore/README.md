@@ -1,4 +1,4 @@
-# Recount
+# Tally
 
 A combat meter in the mould of WoW's Recount and Skada: a small window of coloured bars, one
 per player, sorted by damage, with **DPS, damage taken, healing, biggest hits and all-time
@@ -15,6 +15,6 @@ personal records** a click away. It shows what the players around you are doing,
 - Burning, poison and spirit ticks credited to whoever applied them.
 
 `F7` toggles the window; hold `Left Alt` to free the cursor to drag, resize and click. Report
-posts the current view to chat. Console: `recount` for the rest.
+posts the current view to chat. Console: `tally` for the rest.
 
-Requires BepInEx and Jotunn. Source and issues: https://github.com/jumpingmushroom/Recount
+Requires BepInEx and Jotunn. Source and issues: https://github.com/jumpingmushroom/Tally
