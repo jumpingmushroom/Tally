@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.1
+
+- **Records are safer.** Events shared by other players are checked before they count, so a
+  malformed one can no longer end up in your records file and make it unreadable. The file
+  is also replaced in one step when saved, so a crash at the wrong moment cannot lose it.
+- **Names from other players** can no longer carry formatting tags into the window.
+- **Toggling TextOutline** rebuilds the window once again, instead of once per world visited
+  this session.
+- **`tally forget`** clears the Records view at once rather than at the next hit.
+
 ## 1.0.0 — first release
 
 A combat meter for Valheim: who is doing what damage, to what, and how much of it.
