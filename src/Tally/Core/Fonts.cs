@@ -24,7 +24,6 @@ namespace Tally.Core
 
         private static readonly Dictionary<string, TMP_FontAsset> _byName = new Dictionary<string, TMP_FontAsset>(StringComparer.OrdinalIgnoreCase);
         private static List<string> _names = new List<string> { DefaultName, "Valheim-AveriaSansLibre", "Valheim-Norse" };
-        private static bool _scanned;
         private static readonly Dictionary<string, Material> _outlines = new Dictionary<string, Material>(StringComparer.OrdinalIgnoreCase);
         private static readonly HashSet<string> _fallbacks = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private const string OutlineKeyword = "OUTLINE_ON";
@@ -84,7 +83,6 @@ namespace Tally.Core
                 return ra != rb ? ra.CompareTo(rb) : string.Compare(a, b, StringComparison.OrdinalIgnoreCase);
             });
             _names = names;
-            _scanned = true;
 
             TallyPlugin.Log.LogInfo("fonts: " + _byName.Count + " found, " + names.Count + " offered ["
                 + Describe(names) + "], " + rejected.Count + " rejected (" + _fallbacks.Count + " are TMP fallbacks)");
@@ -261,8 +259,6 @@ namespace Tally.Core
                 + (found != null ? found.name + " (settings only)" : "none, using defaults"));
             return found;
         }
-
-        public static bool Scanned => _scanned;
 
         public static IList<string> Names => _names;
 

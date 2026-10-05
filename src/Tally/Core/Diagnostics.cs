@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text;
 using Tally.Net;
 using Tally.UI;
@@ -46,14 +45,7 @@ namespace Tally.Core
             SoundPlayer.Resolved r = SoundPlayer.Resolve(PluginConfig.RecordSoundPrefab.Value);
             sb.Append("sound=").Append(r.Prefab).Append(r.Ok ? " ok (" + r.Clips.Length + " clip(s), mixer " + (r.Mixer != null ? r.Mixer.name : "none") + ")" : " " + r.Error).Append(' ');
 
-            List<GameObject> levelUp = SoundPlayer.LevelUpPrefabs();
-            sb.Append("levelUpEffects=[");
-            for (int i = 0; i < levelUp.Count; i++)
-            {
-                if (i > 0) sb.Append(", ");
-                sb.Append(levelUp[i].name).Append(levelUp[i].GetComponentInChildren<ZSFX>(true) != null ? "(sfx)" : "");
-            }
-            sb.Append(']');
+            sb.Append("levelUpEffects=[").Append(SoundPlayer.DescribeLevelUpPrefabs()).Append(']');
             return sb.ToString();
         }
     }

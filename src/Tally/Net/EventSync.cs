@@ -147,8 +147,8 @@ namespace Tally.Net
                     return;
                 byte protocol = pkg.ReadByte();
                 uint nonce = pkg.ReadUInt();
-                string version = pkg.ReadString();
-                string name = pkg.ReadString();
+                string version = Clean(pkg.ReadString());
+                string name = Clean(pkg.ReadString());
 
                 PeerState p;
                 bool isNew = !_peers.TryGetValue(sender, out p);
@@ -270,6 +270,39 @@ namespace Tally.Net
             strings.Add(s);
         }
 
+        private const int MaxStringLength = 64;
+
+        /// <summary>
+        /// Names from a peer end up in rich-text labels, so a tag in one would restyle the
+        /// window. No name the game produces contains angle brackets; drop them, and cap length.
+        /// </summary>
+        private static string Clean(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return "";
+            if (s.IndexOf('<') >= 0 || s.IndexOf('>') >= 0)
+                s = s.Replace("<", "").Replace(">", "");
+            return s.Length > MaxStringLength ? s.Substring(0, MaxStringLength) : s;
+        }
+
+        /// <summary>
+        /// A peer's numbers go into the totals and can become a record on disk; reject what the
+        /// game could never produce.
+        /// </summary>
+        private static bool Valid(CombatEvent e)
+        {
+            if (e.Kind != EventKind.Damage && e.Kind != EventKind.Taken && e.Kind != EventKind.Heal)
+                return false;
+            if (!Finite(e.Amount) || e.Amount < 0f || !Finite(e.Extra) || e.Extra < 0f)
+                return false;
+            return Finite(e.Position.x) && Finite(e.Position.y) && Finite(e.Position.z);
+        }
+
+        private static bool Finite(float f)
+        {
+            return !float.IsNaN(f) && !float.IsInfinity(f);
+        }
+
         private static void OnEvents(long sender, ZPackage pkg)
         {
             try
@@ -286,7 +319,7 @@ namespace Tally.Net
                 int stringCount = pkg.ReadByte();
                 var strings = new string[stringCount];
                 for (int i = 0; i < stringCount; i++)
-                    strings[i] = pkg.ReadString();
+                    strings[i] = Clean(pkg.ReadString());
 
                 PeerState peer;
                 if (!_peers.TryGetValue(sender, out peer))
@@ -328,6 +361,11 @@ namespace Tally.Net
                     }
                     peer.LastSeq = seq;
 
+                    if (!Valid(e))
+                    {
+                        EventsDropped++;
+                        continue;
+                    }
                     if (local != null && Vector3.Distance(local.transform.position, e.Position) > range)
                     {
                         EventsDropped++;

@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Tally.UI
 {
@@ -13,7 +12,6 @@ namespace Tally.UI
         private GameObject _root;
         private RectTransform _rect;
         private TextMeshProUGUI _text;
-        private Image _bg;
 
         public bool Visible
         {
@@ -28,7 +26,6 @@ namespace Tally.UI
             _root = Widgets.Panel(parent, "TallyTooltip", new Color(0.03f, 0.025f, 0.02f, 0.92f), false);
             _rect = Widgets.Rect(_root);
             Widgets.TopLeft(_rect, 0f, 0f, 200f, 50f);
-            _bg = _root.GetComponent<Image>();
             Widgets.AddBorder(_root.transform, Widgets.Border);
 
             _text = Widgets.Label(_root.transform, "Text", 13f, Widgets.Text, TextAlignmentOptions.TopLeft);

@@ -43,7 +43,7 @@ namespace Tally.Model
             Revision++;
         }
 
-        public void Add(CombatEvent e, float now, float activeGap, int historySize)
+        public void Add(CombatEvent e, float now, float activeGap)
         {
             bool combat = e.Kind != EventKind.Heal;
 
@@ -74,7 +74,6 @@ namespace Tally.Model
                 return;
 
             InFight = false;
-            Current.Closed = true;
             Current.EndTime = LastCombatTime;
             Current.Label = LabelFor(Current);
 

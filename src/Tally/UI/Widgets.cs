@@ -16,7 +16,6 @@ namespace Tally.UI
     public static class Widgets
     {
         public static readonly Color Text = new Color32(0xF2, 0xE9, 0xD8, 0xFF);
-        public static readonly Color Dim = new Color32(0xBC, 0xAF, 0x97, 0xFF);
         public static readonly Color Border = new Color(0.62f, 0.52f, 0.36f, 0.75f);
         public static readonly Color Background = new Color(0.03f, 0.025f, 0.02f, 1f);
         public static readonly Color TitleBackground = new Color(0.12f, 0.09f, 0.06f, 0.55f);

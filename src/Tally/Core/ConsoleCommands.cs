@@ -38,7 +38,7 @@ namespace Tally.Core
                         case "report": TallyPlugin.Window.Report(); break;
                         case "dump": Dump(args.Context); break;
                         case "records": Records(args.Context); break;
-                        case "forget": RecordStore.Forget(); Say(args.Context, "Tally: forgot every record for this character and world."); break;
+                        case "forget": RecordStore.Forget(); TallyPlugin.Window.Refresh(); Say(args.Context, "Tally: forgot every record for this character and world."); break;
                         case "sfx": Sfx(args); break;
                         case "peers": Peers(args.Context); break;
                         case "fonts": FontList(args.Context); break;
@@ -145,14 +145,8 @@ namespace Tally.Core
 
             Say(args.Context, "Tally: " + SoundPlayer.Play(PluginConfig.RecordSoundPrefab.Value, PluginConfig.RecordSoundVolume.Value));
 
-            List<GameObject> levelUp = SoundPlayer.LevelUpPrefabs();
-            var sb = new StringBuilder("  level-up effect prefabs: ");
-            for (int i = 0; i < levelUp.Count; i++)
-            {
-                if (i > 0) sb.Append(", ");
-                sb.Append(levelUp[i].name).Append(levelUp[i].GetComponentInChildren<ZSFX>(true) != null ? " (has sfx)" : "");
-            }
-            Say(args.Context, levelUp.Count > 0 ? sb.ToString() : "  no level-up effect prefabs found on the player");
+            string levelUp = SoundPlayer.DescribeLevelUpPrefabs();
+            Say(args.Context, levelUp.Length > 0 ? "  level-up effect prefabs: " + levelUp : "  no level-up effect prefabs found on the player");
 
             foreach (string name in new[] { "fx_GP_Activation", "sfx_secretfound", "sfx_lootspawn", "sfx_perfectblock", "sfx_offering", SoundPlayer.LevelUpAlias })
             {

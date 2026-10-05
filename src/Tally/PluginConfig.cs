@@ -255,7 +255,6 @@ namespace Tally
             FontName = _cfg.Bind("Window", "Font", Fonts.DefaultName,
                 new ConfigDescription(FontDescription, new AcceptableValueList<string>(new List<string>(names).ToArray()), Attr(48)));
             FontName.SettingChanged += (s, e) => Raise(FontChanged);
-            TextOutline.SettingChanged += (s, e) => Raise(FontChanged);
 
             foreach (string n in names)
             {

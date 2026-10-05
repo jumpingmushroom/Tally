@@ -30,7 +30,6 @@ namespace Tally.Model
         public string Target = "";
         public bool Backstab;
         public bool Approximate;
-        public float Time;
     }
 
     /// <summary>Everything a segment knows about one player.</summary>
@@ -107,19 +106,11 @@ namespace Tally.Model
         public string Label = "";
         public float StartTime = -1f;
         public float EndTime = -1f;
-        public bool Closed;
 
         public readonly Dictionary<string, PlayerStats> Players = new Dictionary<string, PlayerStats>();
 
         /// <summary>Damage per target, to name a fight after what was fought.</summary>
         public readonly Dictionary<string, float> TargetDamage = new Dictionary<string, float>();
-
-        public float Duration(float now)
-        {
-            if (StartTime < 0f)
-                return 0f;
-            return (Closed ? EndTime : now) - StartTime;
-        }
 
         public PlayerStats Get(string player)
         {
@@ -160,8 +151,7 @@ namespace Tally.Model
                             Weapon = e.Ability,
                             Target = e.Target,
                             Backstab = e.Has(EventFlags.Backstab),
-                            Approximate = approx,
-                            Time = now
+                            Approximate = approx
                         });
                     }
 

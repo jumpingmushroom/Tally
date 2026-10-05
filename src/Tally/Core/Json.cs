@@ -30,8 +30,9 @@ namespace Tally.Core
             if (v is bool) { sb.Append((bool)v ? "true" : "false"); return; }
             if (v is int) { sb.Append(((int)v).ToString(CultureInfo.InvariantCulture)); return; }
             if (v is long) { sb.Append(((long)v).ToString(CultureInfo.InvariantCulture)); return; }
-            if (v is float) { sb.Append(((float)v).ToString("R", CultureInfo.InvariantCulture)); return; }
-            if (v is double) { sb.Append(((double)v).ToString("R", CultureInfo.InvariantCulture)); return; }
+            // JSON has no NaN or Infinity; writing them would make the whole file unreadable.
+            if (v is float) { float f = (float)v; sb.Append(float.IsNaN(f) || float.IsInfinity(f) ? "null" : f.ToString("R", CultureInfo.InvariantCulture)); return; }
+            if (v is double) { double d = (double)v; sb.Append(double.IsNaN(d) || double.IsInfinity(d) ? "null" : d.ToString("R", CultureInfo.InvariantCulture)); return; }
 
             var dict = v as IDictionary<string, object>;
             if (dict != null)
@@ -241,12 +242,6 @@ namespace Tally.Core
         {
             object v;
             return d != null && d.TryGetValue(key, out v) ? v as Dictionary<string, object> : null;
-        }
-
-        public static List<object> Arr(Dictionary<string, object> d, string key)
-        {
-            object v;
-            return d != null && d.TryGetValue(key, out v) ? v as List<object> : null;
         }
     }
 }

@@ -337,6 +337,12 @@ namespace Tally.UI
             _dirty = true;
         }
 
+        /// <summary>Redraw on the next frame: for changes the meter's revision does not see, like the records.</summary>
+        public void Refresh()
+        {
+            _dirty = true;
+        }
+
         public void Back()
         {
             Drill = null;

@@ -60,7 +60,7 @@ namespace Tally.Core
 
         private static void Add(CombatEvent e)
         {
-            Meter.Add(e, Time.time, PluginConfig.ActiveGap.Value, PluginConfig.HistorySize.Value);
+            Meter.Add(e, Time.time, PluginConfig.ActiveGap.Value);
 
             if (PluginConfig.Verbose.Value)
             {

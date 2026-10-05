@@ -15,8 +15,6 @@ namespace Tally.UI
         private float _holdUntil;
         private float _fadeUntil;
 
-        public bool Created => _root != null;
-
         public void Create(Transform parent)
         {
             if (_root != null)

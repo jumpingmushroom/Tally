@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Tally.Model;
 using Tally.UI;
 using UnityEngine;
@@ -146,6 +147,19 @@ namespace Tally.Core
                 if (ed != null && ed.m_prefab != null)
                     list.Add(ed.m_prefab);
             return list;
+        }
+
+        /// <summary>The level-up effect prefabs by name, each marked if it carries a sound, for diagnostics.</summary>
+        public static string DescribeLevelUpPrefabs()
+        {
+            List<GameObject> prefabs = LevelUpPrefabs();
+            var sb = new StringBuilder();
+            for (int i = 0; i < prefabs.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(prefabs[i].name).Append(prefabs[i].GetComponentInChildren<ZSFX>(true) != null ? " (sfx)" : "");
+            }
+            return sb.ToString();
         }
 
         /// <summary>Returns what happened, for the console; a missing prefab is not an error worth a log line per hit.</summary>

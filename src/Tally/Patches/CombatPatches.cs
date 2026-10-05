@@ -250,6 +250,12 @@ namespace Tally.Patches
             return PluginConfig.IncludeStructures.Value && nview != null && nview.IsValid() && nview.IsOwner() && health > 0f;
         }
 
+        /// <summary>Alive, reading the health the object keeps in its ZDO.</summary>
+        public static bool AliveByZdo(ZNetView nview, float defaultHealth)
+        {
+            return Alive(nview, nview != null && nview.IsValid() ? nview.GetZDO().GetFloat(ZDOVars.s_health, defaultHealth) : 0f);
+        }
+
         public static void Report(Component target, ZNetView nview, HitData hit, int minToolTier, bool allowTierZero, string name)
         {
             try
@@ -280,8 +286,7 @@ namespace Tally.Patches
     {
         private static void Prefix(WearNTear __instance, out bool __state)
         {
-            ZNetView nview = __instance.m_nview;
-            __state = ObjectHits.Alive(nview, nview != null && nview.IsValid() ? nview.GetZDO().GetFloat(ZDOVars.s_health, __instance.m_health) : 0f);
+            __state = ObjectHits.AliveByZdo(__instance.m_nview, __instance.m_health);
         }
 
         private static void Postfix(WearNTear __instance, HitData hit, bool __state)
@@ -300,9 +305,7 @@ namespace Tally.Patches
     {
         private static void Prefix(Destructible __instance, out bool __state)
         {
-            ZNetView nview = __instance.m_nview;
-            __state = !__instance.m_destroyed
-                      && ObjectHits.Alive(nview, nview != null && nview.IsValid() ? nview.GetZDO().GetFloat(ZDOVars.s_health, __instance.m_health) : 0f);
+            __state = !__instance.m_destroyed && ObjectHits.AliveByZdo(__instance.m_nview, __instance.m_health);
         }
 
         private static void Postfix(Destructible __instance, HitData hit, bool __state)
@@ -318,8 +321,7 @@ namespace Tally.Patches
     {
         private static void Prefix(TreeBase __instance, out bool __state)
         {
-            ZNetView nview = __instance.m_nview;
-            __state = ObjectHits.Alive(nview, nview != null && nview.IsValid() ? nview.GetZDO().GetFloat(ZDOVars.s_health, __instance.m_health) : 0f);
+            __state = ObjectHits.AliveByZdo(__instance.m_nview, __instance.m_health);
         }
 
         private static void Postfix(TreeBase __instance, HitData hit, bool __state)
@@ -335,8 +337,7 @@ namespace Tally.Patches
     {
         private static void Prefix(TreeLog __instance, out bool __state)
         {
-            ZNetView nview = __instance.m_nview;
-            __state = ObjectHits.Alive(nview, nview != null && nview.IsValid() ? nview.GetZDO().GetFloat(ZDOVars.s_health, 0f) : 0f);
+            __state = ObjectHits.AliveByZdo(__instance.m_nview, 0f);
         }
 
         private static void Postfix(TreeLog __instance, HitData hit, bool __state)

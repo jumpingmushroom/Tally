@@ -113,7 +113,7 @@ namespace Tally.Core
         public static RecordResult Offer(CombatEvent e)
         {
             EnsureLoaded();
-            if (_path == null || e.Amount <= 0f)
+            if (_path == null || !(e.Amount > 0f) || float.IsInfinity(e.Amount))
                 return null;
 
             string weapon = string.IsNullOrEmpty(e.Ability) ? Names.Unknown : e.Ability;
@@ -297,12 +297,14 @@ namespace Tally.Core
 
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_path));
 
-                // Write beside, then rename: a crash mid-write must not lose the file.
+                // Write beside, then swap in one step: a crash mid-write must not lose the file,
+                // and deleting first would leave a window with no file at all.
                 string tmp = _path + ".tmp";
                 File.WriteAllText(tmp, Json.Write(root));
                 if (File.Exists(_path))
-                    File.Delete(_path);
-                File.Move(tmp, _path);
+                    File.Replace(tmp, _path, null);
+                else
+                    File.Move(tmp, _path);
                 _dirty = false;
 
                 if (PluginConfig.Verbose.Value)
